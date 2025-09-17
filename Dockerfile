@@ -6,7 +6,7 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip \
  && pip install --no-cache-dir -r requirements.txt
 
-# Copy source after deps (keeps build cache effective)
+# Copy source after deps (better cache)
 COPY . .
 
 # Cloud Run provides $PORT; default to 8080 locally

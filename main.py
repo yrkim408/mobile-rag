@@ -1,5 +1,4 @@
-import os
-import logging
+import os, logging
 from fastapi import FastAPI, Depends
 from fastapi.security import OAuth2AuthorizationCodeBearer
 
@@ -26,7 +25,6 @@ FastAPIInstrumentor().instrument_app(app)
 RequestsInstrumentor().instrument()
 tracer = trace.get_tracer(__name__)
 
-# ---- OAuth2 (Authorization Code; PKCE handled by the client) ----
 oauth2_scheme = OAuth2AuthorizationCodeBearer(
     authorizationUrl="https://accounts.google.com/o/oauth2/auth",
     tokenUrl="https://oauth2.googleapis.com/token",
@@ -39,6 +37,5 @@ def health():
 
 @app.get("/auth")
 def auth(token: str = Depends(oauth2_scheme)):
-    # NOTE: For smoke test only. In production, verify JWT (issuer/audience/JWKS).
     with tracer.start_as_current_span("auth-span"):
         return {"message": "Authenticated"}
