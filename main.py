@@ -6,7 +6,12 @@ from fastapi.security import OAuth2AuthorizationCodeBearer
 from opentelemetry import trace
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.resources import Resource
-from opentelemetry.sdk.trace.export import BatchSpanProcessor
+
+# Compat shim: 0.17 uses BatchExportSpanProcessor; 1.x uses BatchSpanProcessor
+try:
+    from opentelemetry.sdk.trace.export import BatchSpanProcessor
+except ImportError:
+    from opentelemetry.sdk.trace.export import BatchExportSpanProcessor as BatchSpanProcessor
 
 try:
     from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
