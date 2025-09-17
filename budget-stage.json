@@ -1,0 +1,29 @@
+{
+  "displayName": "Mobile RAG stage Daily Budget",
+  "budgetFilter": {
+    "projects": ["projects/mrag-0912-2659-stage"]
+  },
+  "amount": {
+    "specifiedAmount": {
+      "currencyCode": "USD",
+      "units": "500"
+    }
+  },
+  "thresholdRules": [
+    {
+      "thresholdPercent": 0.5,
+      "spendBasis": "CURRENT_SPEND"
+    },
+    {
+      "thresholdPercent": 0.9,
+      "spendBasis": "CURRENT_SPEND"
+    },
+    {
+      "thresholdPercent": 1.0,
+      "spendBasis": "FORECASTED_SPEND"
+    }
+  ],
+  "notificationsRule": {
+    "disableDefaultIamRecipients": false
+  }
+}

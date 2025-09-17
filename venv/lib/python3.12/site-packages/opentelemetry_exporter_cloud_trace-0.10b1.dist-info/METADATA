@@ -1,0 +1,80 @@
+Metadata-Version: 2.1
+Name: opentelemetry-exporter-cloud-trace
+Version: 0.10b1
+Summary: Deprecated Cloud Trace integration for OpenTelemetry
+Home-page: https://github.com/open-telemetry/opentelemetry-python/ext/opentelemetry-exporter-cloud-trace
+Author: OpenTelemetry Authors
+Author-email: cncf-opentelemetry-contributors@lists.cncf.io
+License: Apache-2.0
+Platform: any
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.4
+Classifier: Programming Language :: Python :: 3.5
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Requires-Python: >=3.4
+Description-Content-Type: text/x-rst
+Requires-Dist: google-cloud-trace
+Requires-Dist: opentelemetry-api
+Requires-Dist: opentelemetry-sdk
+Provides-Extra: test
+
+OpenTelemetry Cloud Trace Exporters
+===================================
+
+DEPRECATED
+----------
+
+**This package is deprecated. It will not
+receive any more updates.** Please use `opentelemetry-exporter-gcp-trace
+<https://pypi.org/project/opentelemetry-exporter-gcp-trace/>`_ and
+`opentelemetry-propagator-gcp
+<https://pypi.org/project/opentelemetry-propagator-gcp/>`_ instead. It will not
+receive any more updates.
+
+This library provides classes for exporting trace data to Google Cloud Trace.
+
+Installation
+------------
+
+::
+
+    pip install opentelemetry-exporter-cloud-trace
+
+Usage
+-----
+
+.. code:: python
+
+    from opentelemetry import trace
+    from opentelemetry.exporter.cloud_trace import CloudTraceSpanExporter
+    from opentelemetry.sdk.trace import TracerProvider
+    from opentelemetry.sdk.trace.export import (
+        SimpleExportSpanProcessor,
+    )
+
+    trace.set_tracer_provider(TracerProvider())
+
+    cloud_trace_exporter = CloudTraceSpanExporter(
+        project_id='my-gcloud-project',
+    )
+    trace.get_tracer_provider().add_span_processor(
+        SimpleExportSpanProcessor(cloud_trace_exporter)
+    )
+    tracer = trace.get_tracer(__name__)
+    with tracer.start_as_current_span('foo'):
+        print('Hello world!')
+
+
+
+References
+----------
+
+* `Cloud Trace <https://cloud.google.com/trace/>`_
+* `OpenTelemetry Project <https://opentelemetry.io/>`_
+
+
